@@ -182,9 +182,11 @@ public class Player : MonoBehaviour
     public void KillPlayer()
     {
         lives = 0;
+        Debug.Log("vidas: "+ lives);
+        UIManager.obj.gamePause = true;
         AudioController.obj.PlayGameOver();
         anim.SetBool("dead", true);
-        Destroy(gameObject, 0.9f);
+        //Destroy(gameObject, 0.9f); //0.9f
     }
 
     private void OnDestroy()

@@ -11,6 +11,7 @@ public class ExitLevel : MonoBehaviour
     public GameObject canvas;
     public GameObject canvasGameOver;
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -27,6 +28,7 @@ public class ExitLevel : MonoBehaviour
         //Desplegar GameOver
         if (Player.obj.lives == 0)
         {
+            Debug.Log("GameOver");
             //stop gameplay music
             UIManager.obj.gamePause = true;
             fade.SetActive(true);
@@ -37,9 +39,15 @@ public class ExitLevel : MonoBehaviour
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(0);
+        
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else SceneManager.LoadScene(0);
     }
 
+    //Cambia nivel cuando se toca la puerta
     public void ChangeLevel()
     {
         SceneManager.LoadScene(scene);

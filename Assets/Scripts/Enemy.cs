@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         //Dañar personaje
-        if (collision.gameObject.CompareTag("Player") && anim.GetBool("isDamage") == true)
+        if (collision.gameObject.CompareTag("Player") && anim.GetBool("isDamage") == false && Player.obj.lives > 0)
         {
             Debug.Log("Daño a personaje");
             Player.obj.Damage();
@@ -88,6 +88,7 @@ public class Enemy : MonoBehaviour
         //dañar Enemigo
         if (collision.gameObject.CompareTag("Player"))
         {
+            speed = 0;
             Damage();
         }
     }
@@ -99,7 +100,6 @@ public class Enemy : MonoBehaviour
         anim.SetBool("isDamage", true);
         if (lives == 0)
         {
-            
             anim.SetBool("dead", true);
             AudioController.obj.PlayKillEnemy();
             Game.obj.AddScore(scoreGive);
