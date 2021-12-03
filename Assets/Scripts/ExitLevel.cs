@@ -9,6 +9,7 @@ public class ExitLevel : MonoBehaviour
 
     public GameObject fade;
     public GameObject canvas;
+    public GameObject canvasGameOver;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,8 +22,30 @@ public class ExitLevel : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //Desplegar GameOver
+        if (Player.obj.lives == 0)
+        {
+            //stop gameplay music
+            fade.SetActive(true);
+            canvas.SetActive(false);
+            canvasGameOver.SetActive(true);
+        }
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void ChangeLevel()
     {
         SceneManager.LoadScene(scene);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

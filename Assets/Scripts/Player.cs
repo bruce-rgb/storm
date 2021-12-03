@@ -181,7 +181,8 @@ public class Player : MonoBehaviour
 
     public void KillPlayer()
     {
-        AudioController.obj.PlayPlayerDamage();
+        lives = 0;
+        AudioController.obj.PlayGameOver();
         anim.SetBool("dead", true);
         Destroy(gameObject, 0.9f);
     }
