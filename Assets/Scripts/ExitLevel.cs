@@ -28,6 +28,7 @@ public class ExitLevel : MonoBehaviour
         if (Player.obj.lives == 0)
         {
             //stop gameplay music
+            UIManager.obj.gamePause = true;
             fade.SetActive(true);
             canvas.SetActive(false);
             canvasGameOver.SetActive(true);

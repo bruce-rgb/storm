@@ -24,12 +24,14 @@ public class Enemy : MonoBehaviour
 
     public int scoreGive = 50;
 
-    private RaycastHit2D hit; 
+    private RaycastHit2D hit;
+    private Animator anim;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>(); //obtener en una variable el acceso a todas las propiedasdes del componente.
     }
 
@@ -59,10 +61,12 @@ public class Enemy : MonoBehaviour
             if (hit.transform != null)
                 if (hit.transform.CompareTag("Enemy"))
                     movHor *= -1;
+
     }
 
     void FixedUpdate()
     {
+        anim.SetBool("isDamage", false);
         rb.velocity = new Vector2(movHor * speed, rb.velocity.y); //manejar el movimiento de los enemigos
     }
 
@@ -71,7 +75,7 @@ public class Enemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         //Dañar personaje
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && anim.GetBool("isDamage") == true)
         {
             Debug.Log("Daño a personaje");
             Player.obj.Damage();
@@ -92,12 +96,15 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Daño a enemigo");
         lives--;
+        anim.SetBool("isDamage", true);
         if (lives == 0)
         {
-            //Destroy(gameObject);
+            
+            anim.SetBool("dead", true);
             AudioController.obj.PlayKillEnemy();
             Game.obj.AddScore(scoreGive);
-            gameObject.SetActive(false); //destruye al enemigo
+            //gameObject.SetActive(false); //destruye al enemigo
+            Destroy(gameObject, 0.6f);
         }
     }
 }
